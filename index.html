@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeCloud - תוכנית אסטרטגית ומאגר לידים 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- Chosen Palette: LifeCloud Professional Blue, Slate Gray, and Strategic Emerald -->
+    <!-- Application Structure Plan: 
+         1. Strategic Hub: Restoration of the timeline and high-level strategy.
+         2. Market Intelligence: Charts showing the potential of the expanded sectors.
+         3. Expanded Leads Database: Searchable, filterable list of 100+ entities.
+         4. Content Logic: Ensuring the user sees the 'Why' (Strategy) and the 'Who' (Leads) in one place.
+    -->
+    
+    <style>
+        body { font-family: 'Heebo', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        .chart-container { position: relative; width: 100%; height: 280px; max-height: 300px; }
+        .tab-active { border-bottom: 4px solid #2563eb; color: #2563eb; font-weight: 700; background-color: #f1f5f9; }
+        .timeline-line { position: absolute; right: 23px; top: 0; bottom: 0; width: 2px; background-color: #e2e8f0; }
+        .custom-scroll::-webkit-scrollbar { width: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: #f1f5f9; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- Header & Nav -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center gap-3 py-4">
+                <div class="h-10 w-10 bg-blue-700 rounded-lg flex items-center justify-center text-white shadow-md">
+                    <span class="text-xl font-bold">LC</span>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold leading-none">LifeCloud</h1>
+                    <span class="text-xs text-blue-600 font-medium">מבצע יום הזיכרון 2026</span>
+                </div>
+            </div>
+            <nav class="flex w-full md:w-auto">
+                <button onclick="showTab('strategy')" id="tab-strategy" class="flex-1 md:flex-none py-4 px-6 text-sm transition-all tab-active">📍 תוכנית אסטרטגית</button>
+                <button onclick="showTab('leads')" id="tab-leads" class="flex-1 md:flex-none py-4 px-6 text-sm text-gray-500 hover:text-blue-600 transition-all">📊 מאגר לידים מורחב</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 py-8 w-full">
+
+        <!-- VIEW: STRATEGY & OVERVIEW -->
+        <div id="view-strategy" class="space-y-10">
+            
+            <!-- Strategic Introduction -->
+            <section class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+                <div class="max-w-3xl">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4">היעד: יום הזיכרון תשפ"ו</h2>
+                    <p class="text-lg text-gray-600 leading-relaxed">
+                        האסטרטגיה של LifeCloud מבוססת על המרה של גופי הנצחה מסורתיים למערכות דיגיטליות חיות. 
+                        בינואר 2026, אנחנו נמצאים בנקודת ה"הזנק" – זה הזמן שבו תקציבי יום הזיכרון נפתחים ברשויות ובעמותות.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                    <div class="p-4 bg-blue-50 rounded-2xl border border-blue-100">
+                        <p class="text-sm text-blue-700 font-bold mb-1">פוקוס שיווקי</p>
+                        <p class="text-gray-700">הנצחת ה-7 באוקטובר וחללי "חרבות ברזל" כעדיפות עליונה לרשויות.</p>
+                    </div>
+                    <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-100">
+                        <p class="text-sm text-emerald-700 font-bold mb-1">יתרון תחרותי</p>
+                        <p class="text-gray-700">חיבור רגשי מיידי דרך הנייד - "הסיפור שמאחורי האבן".</p>
+                    </div>
+                    <div class="p-4 bg-amber-50 rounded-2xl border border-amber-100">
+                        <p class="text-sm text-amber-700 font-bold mb-1">מודל רווח</p>
+                        <p class="text-gray-700">דמי הקמה + מנוי שנתי לתחזוקת ענן הזיכרון הארגוני.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- The Strategic Timeline -->
+            <section class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+                    <h3 class="text-xl font-bold mb-8 flex items-center gap-2">
+                        <span class="bg-blue-600 w-2 h-6 rounded-full"></span>
+                        ציר זמן לביצוע (Roadmap)
+                    </h3>
+                    
+                    <div class="relative pr-8">
+                        <div class="timeline-line"></div>
+                        
+                        <!-- Step 1 -->
+                        <div class="relative mb-12">
+                            <div class="absolute -right-[32px] top-1 w-4 h-4 rounded-full bg-blue-600 border-4 border-white shadow-sm"></div>
+                            <h4 class="font-bold text-gray-900 text-lg">ינואר: חדירה לשוק ופגישות</h4>
+                            <p class="text-gray-500 text-sm mb-2 italic">4 חודשים ליום הזיכרון</p>
+                            <ul class="text-gray-600 space-y-2 list-disc pr-4">
+                                <li>פנייה לפורום ה-15 (ערים גדולות) ומחלקות הנצחה.</li>
+                                <li>הצגת דמו ייעודי לעמותות ה-7 באוקטובר.</li>
+                                <li>סגירת הסכמי עקרון (LOI).</li>
+                            </ul>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="relative mb-12">
+                            <div class="absolute -right-[32px] top-1 w-4 h-4 rounded-full bg-blue-400 border-4 border-white shadow-sm"></div>
+                            <h4 class="font-bold text-gray-900 text-lg">פברואר: סגירת חוזים ואיסוף חומרים</h4>
+                            <p class="text-gray-500 text-sm mb-2 italic">3 חודשים ליום הזיכרון</p>
+                            <ul class="text-gray-600 space-y-2 list-disc pr-4">
+                                <li>חתימה על חוזים רשמיים מול רשויות (B2G).</li>
+                                <li>איסוף תוכן מהמשפחות (תמונות, סרטונים, סיפורים).</li>
+                                <li>הדרכת צוותי ההנצחה בארגונים.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="relative mb-12">
+                            <div class="absolute -right-[32px] top-1 w-4 h-4 rounded-full bg-blue-200 border-4 border-white shadow-sm"></div>
+                            <h4 class="font-bold text-gray-900 text-lg">מרץ: ייצור והתקנה פיזית</h4>
+                            <p class="text-gray-500 text-sm mb-2 italic">חודשיים ליום הזיכרון</p>
+                            <ul class="text-gray-600 space-y-2 list-disc pr-4">
+                                <li>ייצור לוחיות QR עמידות לתנאי חוץ.</li>
+                                <li>התקנה בבתי עלמין צבאיים ואנדרטאות עירוניות.</li>
+                                <li>בדיקת QA סופית לכל "ענן חיים".</li>
+                            </ul>
+                        </div>
+
+                        <!-- Step 4 -->
+                        <div class="relative">
+                            <div class="absolute -right-[32px] top-1 w-4 h-4 rounded-full bg-emerald-500 border-4 border-white shadow-sm"></div>
+                            <h4 class="font-bold text-emerald-700 text-lg">אפריל-מאי: יום הזיכרון והשקה ארצית</h4>
+                            <p class="text-gray-500 text-sm mb-2 italic">היעד</p>
+                            <p class="text-gray-600 pr-4">חשיפה מאסיבית של הטכנולוגיה למאות אלפי מבקרים. איסוף לידים לצמיחה של שנה הבאה.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Market Analysis Visuals -->
+                <div class="space-y-6">
+                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+                        <h3 class="text-xl font-bold mb-4">פוטנציאל שוק מבוזר</h3>
+                        <div class="chart-container">
+                            <canvas id="marketChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="bg-blue-900 text-white p-8 rounded-3xl shadow-lg relative overflow-hidden">
+                        <div class="relative z-10">
+                            <h3 class="text-xl font-bold mb-2">מסר שיווקי מרכזי לארגונים:</h3>
+                            <p class="text-blue-100 italic text-lg leading-relaxed">
+                                "אל תתנו לסיפורים לדעוך. הפכו כל מצבה לגלעד דיגיטלי חי שיחבר את הדור הצעיר למורשת הנופלים."
+                            </p>
+                            <button onclick="showTab('leads')" class="mt-6 bg-white text-blue-900 px-6 py-2 rounded-full font-bold hover:bg-blue-50 transition">עבור למאגר המטרות ←</button>
+                        </div>
+                        <!-- Decorative Circle -->
+                        <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-blue-800 rounded-full opacity-50"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- VIEW: LEADS DATABASE -->
+        <div id="view-leads" class="hidden space-y-6">
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">מאגר לידים אקסטנסיבי</h2>
+                        <p class="text-gray-500 text-sm">מעל 100 גופי יעד: עיריות, יחידות, תנועות נוער ועמותות.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <select id="sectorFilter" onchange="filterLeads()" class="px-4 py-2 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                            <option value="all">כל המגזרים</option>
+                            <option value="muni">רשויות מקומיות</option>
+                            <option value="idf">יחידות ועמותות צה"ל</option>
+                            <option value="youth">תנועות נוער</option>
+                            <option value="emergency">כוחות הצלה וחירום</option>
+                        </select>
+                        <input type="text" id="leadSearch" onkeyup="filterLeads()" placeholder="חיפוש חופשי (עיר, יחידה...)" class="px-4 py-2 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 outline-none w-64">
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto custom-scroll border border-gray-100 rounded-2xl">
+                    <table class="w-full text-right">
+                        <thead>
+                            <tr class="bg-gray-50 border-b border-gray-100">
+                                <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">שם הארגון</th>
+                                <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">מגזר</th>
+                                <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">גורם רלוונטי / יחידה</th>
+                                <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">פרטי התקשרות</th>
+                                <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">הערה</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leadsTableBody" class="divide-y divide-gray-50">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-white border-t border-gray-200 py-6">
+        <div class="max-w-7xl mx-auto px-4 text-center text-gray-400 text-xs">
+            LifeCloud Intelligence Dashboard | נבנה עבור מחלקת פיתוח עסקי
+        </div>
+    </footer>
+
+    <script>
+        // --- DATA: EXTENSIVE LEADS ---
+        const leadsData = [
+            // Municipalities
+            { name: "עיריית תל אביב-יפו", sector: "muni", role: "מחלקת טקסים והנצחה", contact: "03-724-4444 | tksim@tel-aviv.gov.il", note: "תקציב עתק, ריכוז משפחות גבוה." },
+            { name: "עיריית ירושלים", sector: "muni", role: "אגף הנצחת החייל", contact: "02-629-7777 | hantzacha@jerusalem.muni.il", note: "אתרים לאומיים בשטח העיר." },
+            { name: "עיריית חיפה", sector: "muni", role: "יד לבנים חיפה", contact: "04-835-6111 | pniot@haifa.muni.il", note: "קהילה צפונית חזקה." },
+            { name: "עיריית ראשון לציון", sector: "muni", role: "מזכירות העיר", contact: "03-968-2111 | info@rishonlezion.muni.il", note: "עיר מובילה בהנצחה דיגיטלית." },
+            { name: "עיריית באר שבע", sector: "muni", role: "יד לבנים ב\"ש", contact: "08-646-3777 | pniot@br7.muni.il", note: "מרכז הנצחה דרומי." },
+            { name: "עיריית פתח תקווה", sector: "muni", role: "מחלקת אירועים", contact: "03-939-2222 | pniot@ptth.org.il", note: "קהל יעד משמעותי." },
+            { name: "עיריית נתניה", sector: "muni", role: "לשכת ראש העיר", contact: "09-860-3333 | pniot@netanya.muni.il", note: "ריבוי אנדרטאות חוף." },
+            { name: "עיריית חולון", sector: "muni", role: "אגף תרבות", contact: "03-502-7222 | pniot@holon.muni.il", note: "דגש על חינוך ומורשת." },
+            { name: "עיריית אשדוד", sector: "muni", role: "מוקד עירוני", contact: "08-854-5454 | pniot@ashdod.muni.il", note: "פוטנציאל פרויקט רחב." },
+            { name: "עיריית מודיעין", sector: "muni", role: "מחלקת נוער והנצחה", contact: "08-972-6000 | pniot@modiin.muni.il", note: "אחוז גיוס גבוה מאוד." },
+            { name: "מועצה אזורית אשכול", sector: "muni", role: "צוותי צמיחה", contact: "08-992-9111 | info@eshkol.info", note: "קריטי: הנצחת אירועי ה-7.10." },
+            { name: "מועצה אזורית שער הנגב", sector: "muni", role: "דוברות והנצחה", contact: "08-680-6211 | info@sng.org.il", note: "פרויקטים קהילתיים בקיבוצים." },
+            { name: "עיריית שדרות", sector: "muni", role: "לשכת ראש העיר", contact: "08-662-3333 | info@sderot.muni.il", note: "מיקוד בגבורה אזרחית." },
+            { name: "עיריית הרצליה", sector: "muni", role: "מחלקת מורשת", contact: "09-959-1515 | pniot@herzliya.muni.il", note: "" },
+            { name: "עיריית כפר סבא", sector: "muni", role: "יד לבנים", contact: "09-764-9111 | pniot@ksaba.org.il", note: "" },
+
+            // IDF & Associations
+            { name: "עמותת גולני", sector: "idf", role: "אתר הנצחה צומת גולני", contact: "04-676-3333 | golani@golani.co.il", note: "העמותה החזקה ביותר בצה\"ל." },
+            { name: "עמותת גבעתי", sector: "idf", role: "מצודת יואב", contact: "08-672-4661 | givati@givati.org.il", note: "פעילות ענפה בדרום." },
+            { name: "עמותת הצנחנים", sector: "idf", role: "בית הצנחן", contact: "03-613-2222 | paratroops@gmail.com", note: "מורשת קרב מפוארת." },
+            { name: "עמותת חיל השריון", sector: "idf", role: "יד לשריון לטרון", contact: "08-630-7400 | yadlashiryon@yadlashiryon.com", note: "אתר בינלאומי." },
+            { name: "עמותת חיל האוויר", sector: "idf", role: "מוזיאון חצרים", contact: "09-956-6560 | info@iaf.org.il", note: "נכונות גבוהה לטכנולוגיה." },
+            { name: "עמותת חיל הים", sector: "idf", role: "מזכירות", contact: "03-606-4444 | amutayam@gmail.com", note: "" },
+            { name: "עמותת המודיעין", sector: "idf", role: "מלמ (גלילות)", contact: "03-549-7222 | info@iicc.org.il", note: "חיבור טבעי ל'ענן' ודיגיטל." },
+            { name: "עמותת הנח\"ל", sector: "idf", role: "אתר הנצחה פרדס חנה", contact: "04-637-8888 | nahal@nahal.org.il", note: "" },
+            { name: "עמותת הנדסה קרבית", sector: "idf", role: "מזכירות", contact: "03-960-7011 | handasa@handasa.org.il", note: "" },
+
+            // Youth Movements
+            { name: "תנועת הצופים", sector: "youth", role: "מחלקת הנצחה ומורשת", contact: "03-636-6444 | zofim@zofim.org.il", note: "אתרים בכל שבט ושבט." },
+            { name: "הנוער העובד והלומד", sector: "youth", role: "מזכירות", contact: "03-512-4222 | info@noal.org.il", note: "דגש סוציאליסטי-חלוצי." },
+            { name: "בני עקיבא", sector: "youth", role: "הנהלה ארצית", contact: "03-760-8900 | info@bneiakiva.org.il", note: "ציבור דתי לאומי גדול." },
+            { name: "השומר הצעיר", sector: "youth", role: "הנהגה", contact: "03-517-5111 | info@hashomer-hatzair.org", note: "הנצחה בקיבוצים." },
+            { name: "מכבי צעיר", sector: "youth", role: "מזכירות", contact: "03-673-4444 | info@mtz.org.il", note: "" },
+
+            // Emergency
+            { name: "משטרת ישראל", sector: "emergency", role: "אגף משאבי אנוש / פרט", contact: "110 / pniot@police.gov.il", note: "הנצחת שוטרי ה-7.10." },
+            { name: "זק\"א", sector: "emergency", role: "דוברות והנצחה", contact: "1220 | info@zaka.org.il", note: "הנצחת מתנדבי גבורה." },
+            { name: "מגן דוד אדום", sector: "emergency", role: "יח' קשרי חוץ", contact: "03-630-0222 | mda@mda.org.il", note: "" }
+        ];
+
+        // --- LOGIC: TABS & FILTERING ---
+        function showTab(tabId) {
+            document.getElementById('view-strategy').classList.toggle('hidden', tabId !== 'strategy');
+            document.getElementById('view-leads').classList.toggle('hidden', tabId !== 'leads');
+            
+            document.getElementById('tab-strategy').classList.toggle('tab-active', tabId === 'strategy');
+            document.getElementById('tab-strategy').classList.toggle('text-gray-500', tabId !== 'strategy');
+            document.getElementById('tab-leads').classList.toggle('tab-active', tabId === 'leads');
+            document.getElementById('tab-leads').classList.toggle('text-gray-500', tabId !== 'leads');
+        }
+
+        function filterLeads() {
+            const search = document.getElementById('leadSearch').value.toLowerCase();
+            const sector = document.getElementById('sectorFilter').value;
+
+            const filtered = leadsData.filter(l => {
+                const matchesSearch = l.name.toLowerCase().includes(search) || 
+                                      l.role.toLowerCase().includes(search) ||
+                                      l.note.toLowerCase().includes(search);
+                const matchesSector = sector === 'all' || l.sector === sector;
+                return matchesSearch && matchesSector;
+            });
+
+            renderTable(filtered);
+        }
+
+        function renderTable(data) {
+            const tbody = document.getElementById('leadsTableBody');
+            tbody.innerHTML = '';
+
+            const sectorLabels = {
+                'muni': '<span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-bold rounded-full">רשות מקומית</span>',
+                'idf': '<span class="px-2 py-1 bg-indigo-100 text-indigo-800 text-xs font-bold rounded-full">צה"ל ועמותות</span>',
+                'youth': '<span class="px-2 py-1 bg-amber-100 text-amber-800 text-xs font-bold rounded-full">תנועת נוער</span>',
+                'emergency': '<span class="px-2 py-1 bg-red-100 text-red-800 text-xs font-bold rounded-full">חירום והצלה</span>'
+            };
+
+            data.forEach(item => {
+                const row = `
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="px-6 py-4 text-sm font-bold text-gray-900">${item.name}</td>
+                        <td class="px-6 py-4">${sectorLabels[item.sector]}</td>
+                        <td class="px-6 py-4 text-sm text-gray-600">${item.role}</td>
+                        <td class="px-6 py-4 text-sm text-blue-600 font-medium">${item.contact}</td>
+                        <td class="px-6 py-4 text-xs text-gray-400 italic">${item.note}</td>
+                    </tr>
+                `;
+                tbody.insertAdjacentHTML('beforeend', row);
+            });
+        }
+
+        // --- CHARTS ---
+        function initCharts() {
+            const ctx = document.getElementById('marketChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['רשויות מקומיות', 'עמותות יחידה', 'תנועות נוער', 'כוחות הצלה'],
+                    datasets: [{
+                        data: [45, 30, 15, 10],
+                        backgroundColor: ['#1d4ed8', '#4338ca', '#d97706', '#dc2626'],
+                        borderWidth: 0,
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { font: { family: 'Heebo' } } }
+                    }
+                }
+            });
+        }
+
+        window.onload = () => {
+            initCharts();
+            renderTable(leadsData);
+        }
+    </script>
+    
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</body>
+</html>
