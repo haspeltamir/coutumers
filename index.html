@@ -374,18 +374,38 @@
 
             <!-- Template Selector -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div onclick="setTmpl('muni')" id="btn-muni"
-                    class="template-card p-4 bg-white border border-slate-200 rounded-xl font-bold border-r-blue-600 tab-active">
-                    🏢 רשויות מקומיות</div>
-                <div onclick="setTmpl('idf')" id="btn-idf"
-                    class="template-card p-4 bg-white border border-slate-200 rounded-xl font-bold border-r-indigo-600 shadow-sm">
-                    🎗️ עמותות וצה"ל</div>
-                <div onclick="setTmpl('youth')" id="btn-youth"
-                    class="template-card p-4 bg-white border border-slate-200 rounded-xl font-bold border-r-amber-500 shadow-sm">
-                    👦 תנועות נוער</div>
-                <div onclick="setTmpl('emergency')" id="btn-emergency"
-                    class="template-card p-4 bg-white border border-slate-200 rounded-xl font-bold border-r-red-600 shadow-sm">
-                    🚒 כוחות הצלה</div>
+                <div class="space-y-2">
+                    <div onclick="setTmpl('muni')" id="btn-muni"
+                        class="template-card p-4 bg-white border border-slate-200 rounded-xl font-bold border-r-blue-600 tab-active cursor-pointer hover:bg-slate-50">
+                        רשויות מקומיות - א</div>
+                    <div onclick="setTmpl('muni2')" id="btn-muni2"
+                        class="template-card p-4 bg-white border border-slate-200 rounded-xl font-bold border-r-blue-400 shadow-sm cursor-pointer hover:bg-slate-50">
+                        רשויות מקומיות - ב</div>
+                </div>
+                <div class="space-y-2">
+                    <div onclick="setTmpl('idf')" id="btn-idf"
+                        class="template-card p-4 bg-white border border-slate-200 rounded-xl font-bold border-r-indigo-600 shadow-sm cursor-pointer hover:bg-slate-50">
+                        עמותות וצה"ל - א</div>
+                    <div onclick="setTmpl('idf2')" id="btn-idf2"
+                        class="template-card p-4 bg-white border border-slate-200 rounded-xl font-bold border-r-indigo-400 shadow-sm cursor-pointer hover:bg-slate-50">
+                        עמותות וצה"ל - ב</div>
+                </div>
+                <div class="space-y-2">
+                    <div onclick="setTmpl('youth')" id="btn-youth"
+                        class="template-card p-4 bg-white border border-slate-200 rounded-xl font-bold border-r-amber-500 shadow-sm cursor-pointer hover:bg-slate-50">
+                        תנועות נוער - א</div>
+                    <div onclick="setTmpl('youth2')" id="btn-youth2"
+                        class="template-card p-4 bg-white border border-slate-200 rounded-xl font-bold border-r-amber-400 shadow-sm cursor-pointer hover:bg-slate-50">
+                        תנועות נוער - ב</div>
+                </div>
+                <div class="space-y-2">
+                    <div onclick="setTmpl('emergency')" id="btn-emergency"
+                        class="template-card p-4 bg-white border border-slate-200 rounded-xl font-bold border-r-red-600 shadow-sm cursor-pointer hover:bg-slate-50">
+                        כוחות הצלה - א</div>
+                    <div onclick="setTmpl('emergency2')" id="btn-emergency2"
+                        class="template-card p-4 bg-white border border-slate-200 rounded-xl font-bold border-r-red-400 shadow-sm cursor-pointer hover:bg-slate-50">
+                        כוחות הצלה - ב</div>
+                </div>
             </div>
 
             <!-- Email Display -->
@@ -500,6 +520,20 @@
 תמיר הספל
 מנהל LIFE CLOUD`
             },
+            muni2: {
+                subject: "שדרוג אתרי ההנצחה בעיר [שם העיר] לקראת יום הזיכרון",
+                body: `שלום [שם איש קשר],
+שמי [שמך], ואני מלווה ברשויות מקומיות מהלך שמחבר בין המקום הפיזי של ההנצחה לבין הסיפור האנושי שמאחוריו.
+
+הרעיון פשוט: ליד המצבה/אנדרטה מוצב QR עמיד, שמוביל לעמוד זיכרון עשיר—תמונות, סרטונים, קטעי קול, סיפורים של חברים ומשפחה, ונקודות "רגעים" לאורך החיים. במקום שהזיכרון יישאר שורה באבן, הוא הופך ל"עולם ומלואו" שממשיך לחיות דרך הקהילה.
+
+ברמה התפעולית זה עובד מהר: מגדירים אתרים, אוספים חומרים בצורה מסודרת (אפשר גם עם ליווי עריכה), ומטמיעים בשטח בלוז קצר.
+
+אם מתאים, אשמח ל־10 דקות השבוע כדי להבין את היקף האתרים אצלכם ולהציע מתווה יישום נקי ומכבד.
+בברכה,
+תמיר הספל | מנהל LIFE CLOUD
+0523705058 | office@lifecloud-qr.com`
+            },
             idf: {
                 subject: "שימור מורשת הלוחמים של [שם היחידה] - תמיר מ-LifeCloud",
                 body: `היי [שם איש קשר], מה שלומכם?
@@ -519,6 +553,20 @@
 
 תמיר הספל
 מנהל LIFE CLOUD`
+            },
+            idf2: {
+                subject: "לשמר את מורשת [שם היחידה/העמותה] בדרך שהדור הצעיר באמת פוגש",
+                body: `שלום [שם איש קשר],
+אני כותב/ת מתוך כבוד גדול למה שאתם עושים בשימור המורשת של [שם היחידה/העמותה]. האתגר שאנחנו שומעים שוב ושוב הוא לא רק "להנציח"—אלא להנגיש את הסיפור המלא, בצורה שמרגישה חיה ולא טקסית בלבד.
+
+LifeCloud בונה שכבת הנצחה דיגיטלית שמתחברת לאתרי ההנצחה הקיימים: QR עמיד שמוביל לעמוד מורשת עם תוכן עשיר, "קיר" שבו חברים מהפלוגה/מחזור מוסיפים סיפורים ותמונות לאורך שנים, ואפשרות לייצר ציר־חיים שמחבר בין נקודות השירות והאישיות.
+
+זה יוצר חוויה שדור צעיר מתחבר אליה מיד—סריקה אחת, ומקבלים מפגש אמיתי עם האדם, לא רק עם האבן.
+
+אם תרצה/י, נקבע הדגמה קצרה (15 דקות) ונראה איך זה נראה בשטח עבור [שם אתר/אנדרטה/בית עלמין].
+בכבוד רב,
+תמיר הספל | מנהל LIFE CLOUD
+0523705058 | office@lifecloud-qr.com`
             },
             youth: {
                 subject: "יוזמת הנצחה לחניכי ובוגרי [שם התנועה] - תמיר מ-LifeCloud",
@@ -540,6 +588,20 @@
 תמיר הספל
 מנהל LIFE CLOUD`
             },
+            youth2: {
+                subject: "להפוך את יום הזיכרון ב־[שם התנועה] למפגש חינוכי פעיל",
+                body: `שלום [שם איש קשר],
+ב־[שם התנועה] אתם מחנכים דרך חוויה, שייכות וסיפור. בדיוק שם הנצחה יכולה להפוך ממשהו ש"שומעים עליו" למשהו ש"פוגשים".
+
+אנחנו מציעים פתרון שמאפשר להציב בפינת זיכרון/לוח הנצחה QR קטן ומכבד, שמוביל לעמוד סיפור חיים: תמונות, סרטונים, קטעי קול, משפטים של חברים, "רגעים" לאורך השנים, וספר אורחים שבו חניכים ובוגרים יכולים להשאיר זיכרון אישי או תובנה—באישור וליווי מבוגרים.
+
+זה לא בא להחליף טקס—זה נותן לו עומק. החניכים לא רק עומדים מול לוח; הם נוגעים בסיפור, מבינים מי היה האדם ומה הוא השאיר אחריו.
+
+אם מתאים, אשמח לשיחה קצרה כדי להתאים פעילות/תוכן לפי הגילאים והמסגרת אצלכם.
+בברכה,
+תמיר הספל | מנהל LIFE CLOUD
+0523705058 | office@lifecloud-qr.com`
+            },
             emergency: {
                 subject: "הנצחה מכובדת ודיגיטלית לנופלי מערך הכבאות וההצלה - תמיר מ-LifeCloud",
                 body: `היי [שם איש קשר], מה שלומכם?
@@ -559,6 +621,20 @@
 
 תמיר הספל
 מנהל LIFE CLOUD`
+            },
+            emergency2: {
+                subject: "הנצחת לוחמי/מתנדבי [שם הארגון] בצורה מכבדת ונגישה",
+                body: `שלום [שם איש קשר],
+שמי [שמך]. אני פונה אליכם בהערכה עמוקה לפעילות של [שם הארגון] ולמחיר האנושי שהיא לעיתים גובה.
+
+הצעה שלנו מתמקדת בשאלה אחת: איך שומרים את סיפור החיים—לא רק את נסיבות הנפילה—כך שגם בעוד שנים, משפחות, חברים והציבור יוכלו לפגוש את האדם שמאחורי המדים.
+
+הפתרון מבוסס על QR עמיד שמוצב באתר הנצחה/בבית עלמין ומוביל לעמוד מורשת: תמונות, סרטונים, סיפורים של הצוות, נקודות זמן מרכזיות, וספר אורחים שמאפשר לקהילה להשאיר זיכרון בצורה מסודרת ומכבדת. אפשר גם לייצר סדר עבודה שמקל על המשפחות באיסוף החומרים (כולל ליווי עריכה, לפי צורך).
+
+אם תסכימו, אשמח לקבוע פגישה קצרה כדי להבין את הצרכים והיקף האתרים שלכם ולהציע מתווה יישום מדורג.
+בתודה,
+תמיר הספל | מנהל LIFE CLOUD
+0523705058 | office@lifecloud-qr.com`
             }
         };
 
