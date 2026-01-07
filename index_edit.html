@@ -1,0 +1,1753 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeCloud - אסטרטגיה, לידים ותבניות פנייה 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&amp;display=swap" rel="stylesheet">
+
+    <!-- Chosen Palette: LifeCloud Professional Blue, Slate Gray, and Strategic Emerald -->
+    <!-- Application Structure Plan: 
+         1. Strategic Hub: Timeline and high-level strategy for Yom HaZikaron.
+         2. Market Intelligence: Visualizing the potential of sectors.
+         3. Expanded Leads Database: Searchable list of 100+ entities.
+         4. Templates: 4 professional email templates designed to bypass spam filters.
+         5. Spam Checklist: Technical guide for high deliverability.
+    -->
+
+    <style>
+        body {
+            font-family: 'Heebo', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 280px;
+        }
+
+        .tab-active {
+            border-bottom: 4px solid #2563eb;
+            color: #2563eb;
+            font-weight: 700;
+            background-color: #f1f5f9;
+        }
+
+        .timeline-line {
+            position: absolute;
+            right: 23px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: #e2e8f0;
+        }
+
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-scroll::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+
+        .copy-toast {
+            visibility: hidden;
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e293b;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            z-index: 100;
+            transition: 0.3s;
+        }
+
+        .copy-toast.show {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Editable Content Styles */
+        .editable {
+            border: 2px dashed transparent;
+            transition: all 0.2s;
+            border-radius: 4px;
+            padding: 4px;
+        }
+
+        .editable:hover {
+            border-color: #3b82f6;
+            background-color: rgba(59, 130, 246, 0.05);
+            cursor: text;
+        }
+
+        .editing {
+            border-color: #10b981 !important;
+            background-color: rgba(16, 185, 129, 0.05) !important;
+            outline: none;
+        }
+
+        .edit-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .edit-btn {
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .edit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .edit-btn.active {
+            background: #dc2626;
+        }
+
+        .save-btn {
+            background: #10b981;
+        }
+
+        .save-btn:hover {
+            background: #059669;
+        }
+
+        .html-output {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            max-width: 90vw;
+            max-height: 80vh;
+            z-index: 10000;
+            display: none;
+        }
+
+        .html-output-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: between;
+            align-items: center;
+        }
+
+        .html-output-content {
+            padding: 20px;
+            overflow-y: auto;
+            max-height: 60vh;
+        }
+
+        .html-code-area {
+            width: 100%;
+            height: 400px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 12px;
+            resize: vertical;
+        }
+    </style>
+    <style>
+        *,
+        ::before,
+        ::after {
+            --tw-border-spacing-x: 0;
+            --tw-border-spacing-y: 0;
+            --tw-translate-x: 0;
+            --tw-translate-y: 0;
+            --tw-rotate: 0;
+            --tw-skew-x: 0;
+            --tw-skew-y: 0;
+            --tw-scale-x: 1;
+            --tw-scale-y: 1;
+            --tw-pan-x: ;
+            --tw-pan-y: ;
+            --tw-pinch-zoom: ;
+            --tw-scroll-snap-strictness: proximity;
+            --tw-gradient-from-position: ;
+            --tw-gradient-via-position: ;
+            --tw-gradient-to-position: ;
+            --tw-ordinal: ;
+            --tw-slashed-zero: ;
+            --tw-numeric-figure: ;
+            --tw-numeric-spacing: ;
+            --tw-numeric-fraction: ;
+            --tw-ring-inset: ;
+            --tw-ring-offset-width: 0px;
+            --tw-ring-offset-color: #fff;
+            --tw-ring-color: rgb(59 130 246 / 0.5);
+            --tw-ring-offset-shadow: 0 0 #0000;
+            --tw-ring-shadow: 0 0 #0000;
+            --tw-shadow: 0 0 #0000;
+            --tw-shadow-colored: 0 0 #0000;
+            --tw-blur: ;
+            --tw-brightness: ;
+            --tw-contrast: ;
+            --tw-grayscale: ;
+            --tw-hue-rotate: ;
+            --tw-invert: ;
+            --tw-saturate: ;
+            --tw-sepia: ;
+            --tw-drop-shadow: ;
+            --tw-backdrop-blur: ;
+            --tw-backdrop-brightness: ;
+            --tw-backdrop-contrast: ;
+            --tw-backdrop-grayscale: ;
+            --tw-backdrop-hue-rotate: ;
+            --tw-backdrop-invert: ;
+            --tw-backdrop-opacity: ;
+            --tw-backdrop-saturate: ;
+            --tw-backdrop-sepia: ;
+            --tw-contain-size: ;
+            --tw-contain-layout: ;
+            --tw-contain-paint: ;
+            --tw-contain-style:
+        }
+
+        ::backdrop {
+            --tw-border-spacing-x: 0;
+            --tw-border-spacing-y: 0;
+            --tw-translate-x: 0;
+            --tw-translate-y: 0;
+            --tw-rotate: 0;
+            --tw-skew-x: 0;
+            --tw-skew-y: 0;
+            --tw-scale-x: 1;
+            --tw-scale-y: 1;
+            --tw-pan-x: ;
+            --tw-pan-y: ;
+            --tw-pinch-zoom: ;
+            --tw-scroll-snap-strictness: proximity;
+            --tw-gradient-from-position: ;
+            --tw-gradient-via-position: ;
+            --tw-gradient-to-position: ;
+            --tw-ordinal: ;
+            --tw-slashed-zero: ;
+            --tw-numeric-figure: ;
+            --tw-numeric-spacing: ;
+            --tw-numeric-fraction: ;
+            --tw-ring-inset: ;
+            --tw-ring-offset-width: 0px;
+            --tw-ring-offset-color: #fff;
+            --tw-ring-color: rgb(59 130 246 / 0.5);
+            --tw-ring-offset-shadow: 0 0 #0000;
+            --tw-ring-shadow: 0 0 #0000;
+            --tw-shadow: 0 0 #0000;
+            --tw-shadow-colored: 0 0 #0000;
+            --tw-blur: ;
+            --tw-brightness: ;
+            --tw-contrast: ;
+            --tw-grayscale: ;
+            --tw-hue-rotate: ;
+            --tw-invert: ;
+            --tw-saturate: ;
+            --tw-sepia: ;
+            --tw-drop-shadow: ;
+            --tw-backdrop-blur: ;
+            --tw-backdrop-brightness: ;
+            --tw-backdrop-contrast: ;
+            --tw-backdrop-grayscale: ;
+            --tw-backdrop-hue-rotate: ;
+            --tw-backdrop-invert: ;
+            --tw-backdrop-opacity: ;
+            --tw-backdrop-saturate: ;
+            --tw-backdrop-sepia: ;
+            --tw-contain-size: ;
+            --tw-contain-layout: ;
+            --tw-contain-paint: ;
+            --tw-contain-style:
+        }
+
+        /* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */
+        *,
+        ::after,
+        ::before {
+            box-sizing: border-box;
+            border-width: 0;
+            border-style: solid;
+            border-color: #e5e7eb
+        }
+
+        ::after,
+        ::before {
+            --tw-content: ''
+        }
+
+        :host,
+        html {
+            line-height: 1.5;
+            -webkit-text-size-adjust: 100%;
+            -moz-tab-size: 4;
+            tab-size: 4;
+            font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            font-feature-settings: normal;
+            font-variation-settings: normal;
+            -webkit-tap-highlight-color: transparent
+        }
+
+        body {
+            margin: 0;
+            line-height: inherit
+        }
+
+        hr {
+            height: 0;
+            color: inherit;
+            border-top-width: 1px
+        }
+
+        abbr:where([title]) {
+            -webkit-text-decoration: underline dotted;
+            text-decoration: underline dotted
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-size: inherit;
+            font-weight: inherit
+        }
+
+        a {
+            color: inherit;
+            text-decoration: inherit
+        }
+
+        b,
+        strong {
+            font-weight: bolder
+        }
+
+        code,
+        kbd,
+        pre,
+        samp {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-feature-settings: normal;
+            font-variation-settings: normal;
+            font-size: 1em
+        }
+
+        small {
+            font-size: 80%
+        }
+
+        sub,
+        sup {
+            font-size: 75%;
+            line-height: 0;
+            position: relative;
+            vertical-align: baseline
+        }
+
+        sub {
+            bottom: -.25em
+        }
+
+        sup {
+            top: -.5em
+        }
+
+        table {
+            text-indent: 0;
+            border-color: inherit;
+            border-collapse: collapse
+        }
+
+        button,
+        input,
+        optgroup,
+        select,
+        textarea {
+            font-family: inherit;
+            font-feature-settings: inherit;
+            font-variation-settings: inherit;
+            font-size: 100%;
+            font-weight: inherit;
+            line-height: inherit;
+            letter-spacing: inherit;
+            color: inherit;
+            margin: 0;
+            padding: 0
+        }
+
+        button,
+        select {
+            text-transform: none
+        }
+
+        button,
+        input:where([type=button]),
+        input:where([type=reset]),
+        input:where([type=submit]) {
+            -webkit-appearance: button;
+            background-color: transparent;
+            background-image: none
+        }
+
+        :-moz-focusring {
+            outline: auto
+        }
+
+        :-moz-ui-invalid {
+            box-shadow: none
+        }
+
+        progress {
+            vertical-align: baseline
+        }
+
+        ::-webkit-inner-spin-button,
+        ::-webkit-outer-spin-button {
+            height: auto
+        }
+
+        [type=search] {
+            -webkit-appearance: textfield;
+            outline-offset: -2px
+        }
+
+        ::-webkit-search-decoration {
+            -webkit-appearance: none
+        }
+
+        ::-webkit-file-upload-button {
+            -webkit-appearance: button;
+            font: inherit
+        }
+
+        summary {
+            display: list-item
+        }
+
+        blockquote,
+        dd,
+        dl,
+        figure,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        hr,
+        p,
+        pre {
+            margin: 0
+        }
+
+        fieldset {
+            margin: 0;
+            padding: 0
+        }
+
+        legend {
+            padding: 0
+        }
+
+        menu,
+        ol,
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0
+        }
+
+        dialog {
+            padding: 0
+        }
+
+        textarea {
+            resize: vertical
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            opacity: 1;
+            color: #9ca3af
+        }
+
+        [role=button],
+        button {
+            cursor: pointer
+        }
+
+        :disabled {
+            cursor: default
+        }
+
+        audio,
+        canvas,
+        embed,
+        iframe,
+        img,
+        object,
+        svg,
+        video {
+            display: block;
+            vertical-align: middle
+        }
+
+        img,
+        video {
+            max-width: 100%;
+            height: auto
+        }
+
+        [hidden]:where(:not([hidden=until-found])) {
+            display: none
+        }
+
+        .absolute {
+            position: absolute
+        }
+
+        .relative {
+            position: relative
+        }
+
+        .sticky {
+            position: sticky
+        }
+
+        .-right-\[32px\] {
+            right: -32px
+        }
+
+        .top-0 {
+            top: 0px
+        }
+
+        .top-1 {
+            top: 0.25rem
+        }
+
+        .z-50 {
+            z-index: 50
+        }
+
+        .mx-auto {
+            margin-left: auto;
+            margin-right: auto
+        }
+
+        .mb-1 {
+            margin-bottom: 0.25rem
+        }
+
+        .mb-2 {
+            margin-bottom: 0.5rem
+        }
+
+        .mb-4 {
+            margin-bottom: 1rem
+        }
+
+        .mb-6 {
+            margin-bottom: 1.5rem
+        }
+
+        .mb-8 {
+            margin-bottom: 2rem
+        }
+
+        .mt-8 {
+            margin-top: 2rem
+        }
+
+        .flex {
+            display: flex
+        }
+
+        .grid {
+            display: grid
+        }
+
+        .hidden {
+            display: none
+        }
+
+        .h-10 {
+            height: 2.5rem
+        }
+
+        .h-4 {
+            height: 1rem
+        }
+
+        .min-h-screen {
+            min-height: 100vh
+        }
+
+        .w-10 {
+            width: 2.5rem
+        }
+
+        .w-4 {
+            width: 1rem
+        }
+
+        .w-64 {
+            width: 16rem
+        }
+
+        .w-full {
+            width: 100%
+        }
+
+        .max-w-3xl {
+            max-width: 48rem
+        }
+
+        .max-w-7xl {
+            max-width: 80rem
+        }
+
+        .flex-grow {
+            flex-grow: 1
+        }
+
+        .list-disc {
+            list-style-type: disc
+        }
+
+        .grid-cols-1 {
+            grid-template-columns: repeat(1, minmax(0, 1fr))
+        }
+
+        .flex-col {
+            flex-direction: column
+        }
+
+        .flex-wrap {
+            flex-wrap: wrap
+        }
+
+        .items-start {
+            align-items: flex-start
+        }
+
+        .items-center {
+            align-items: center
+        }
+
+        .justify-center {
+            justify-content: center
+        }
+
+        .justify-between {
+            justify-content: space-between
+        }
+
+        .gap-10 {
+            gap: 2.5rem
+        }
+
+        .gap-2 {
+            gap: 0.5rem
+        }
+
+        .gap-3 {
+            gap: 0.75rem
+        }
+
+        .gap-4 {
+            gap: 1rem
+        }
+
+        .gap-6 {
+            gap: 1.5rem
+        }
+
+        .space-y-1> :not([hidden])~ :not([hidden]) {
+            --tw-space-y-reverse: 0;
+            margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));
+            margin-bottom: calc(0.25rem * var(--tw-space-y-reverse))
+        }
+
+        .space-y-10> :not([hidden])~ :not([hidden]) {
+            --tw-space-y-reverse: 0;
+            margin-top: calc(2.5rem * calc(1 - var(--tw-space-y-reverse)));
+            margin-bottom: calc(2.5rem * var(--tw-space-y-reverse))
+        }
+
+        .space-y-4> :not([hidden])~ :not([hidden]) {
+            --tw-space-y-reverse: 0;
+            margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
+            margin-bottom: calc(1rem * var(--tw-space-y-reverse))
+        }
+
+        .space-y-6> :not([hidden])~ :not([hidden]) {
+            --tw-space-y-reverse: 0;
+            margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
+            margin-bottom: calc(1.5rem * var(--tw-space-y-reverse))
+        }
+
+        .space-y-8> :not([hidden])~ :not([hidden]) {
+            --tw-space-y-reverse: 0;
+            margin-top: calc(2rem * calc(1 - var(--tw-space-y-reverse)));
+            margin-bottom: calc(2rem * var(--tw-space-y-reverse))
+        }
+
+        .divide-y> :not([hidden])~ :not([hidden]) {
+            --tw-divide-y-reverse: 0;
+            border-top-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
+            border-bottom-width: calc(1px * var(--tw-divide-y-reverse))
+        }
+
+        .divide-gray-50> :not([hidden])~ :not([hidden]) {
+            --tw-divide-opacity: 1;
+            border-color: rgb(249 250 251 / var(--tw-divide-opacity, 1))
+        }
+
+        .overflow-x-auto {
+            overflow-x: auto
+        }
+
+        .whitespace-nowrap {
+            white-space: nowrap
+        }
+
+        .whitespace-pre-wrap {
+            white-space: pre-wrap
+        }
+
+        .rounded-2xl {
+            border-radius: 1rem
+        }
+
+        .rounded-3xl {
+            border-radius: 1.5rem
+        }
+
+        .rounded-full {
+            border-radius: 9999px
+        }
+
+        .rounded-lg {
+            border-radius: 0.5rem
+        }
+
+        .rounded-xl {
+            border-radius: 0.75rem
+        }
+
+        .border {
+            border-width: 1px
+        }
+
+        .border-4 {
+            border-width: 4px
+        }
+
+        .border-b {
+            border-bottom-width: 1px
+        }
+
+        .border-r-4 {
+            border-right-width: 4px
+        }
+
+        .border-amber-100 {
+            --tw-border-opacity: 1;
+            border-color: rgb(254 243 199 / var(--tw-border-opacity, 1))
+        }
+
+        .border-blue-100 {
+            --tw-border-opacity: 1;
+            border-color: rgb(219 234 254 / var(--tw-border-opacity, 1))
+        }
+
+        .border-emerald-100 {
+            --tw-border-opacity: 1;
+            border-color: rgb(209 250 229 / var(--tw-border-opacity, 1))
+        }
+
+        .border-gray-100 {
+            --tw-border-opacity: 1;
+            border-color: rgb(243 244 246 / var(--tw-border-opacity, 1))
+        }
+
+        .border-gray-200 {
+            --tw-border-opacity: 1;
+            border-color: rgb(229 231 235 / var(--tw-border-opacity, 1))
+        }
+
+        .border-red-100 {
+            --tw-border-opacity: 1;
+            border-color: rgb(254 226 226 / var(--tw-border-opacity, 1))
+        }
+
+        .border-white {
+            --tw-border-opacity: 1;
+            border-color: rgb(255 255 255 / var(--tw-border-opacity, 1))
+        }
+
+        .border-blue-500 {
+            --tw-border-opacity: 1;
+            border-color: rgb(59 130 246 / var(--tw-border-opacity, 1))
+        }
+
+        .border-r-amber-500 {
+            --tw-border-opacity: 1;
+            border-right-color: rgb(245 158 11 / var(--tw-border-opacity, 1))
+        }
+
+        .border-r-blue-500 {
+            --tw-border-opacity: 1;
+            border-right-color: rgb(59 130 246 / var(--tw-border-opacity, 1))
+        }
+
+        .border-r-indigo-500 {
+            --tw-border-opacity: 1;
+            border-right-color: rgb(99 102 241 / var(--tw-border-opacity, 1))
+        }
+
+        .border-r-red-500 {
+            --tw-border-opacity: 1;
+            border-right-color: rgb(239 68 68 / var(--tw-border-opacity, 1))
+        }
+
+        .bg-amber-50 {
+            --tw-bg-opacity: 1;
+            background-color: rgb(255 251 235 / var(--tw-bg-opacity, 1))
+        }
+
+        .bg-blue-400 {
+            --tw-bg-opacity: 1;
+            background-color: rgb(96 165 250 / var(--tw-bg-opacity, 1))
+        }
+
+        .bg-blue-50 {
+            --tw-bg-opacity: 1;
+            background-color: rgb(239 246 255 / var(--tw-bg-opacity, 1))
+        }
+
+        .bg-blue-600 {
+            --tw-bg-opacity: 1;
+            background-color: rgb(37 99 235 / var(--tw-bg-opacity, 1))
+        }
+
+        .bg-blue-700 {
+            --tw-bg-opacity: 1;
+            background-color: rgb(29 78 216 / var(--tw-bg-opacity, 1))
+        }
+
+        .bg-emerald-50 {
+            --tw-bg-opacity: 1;
+            background-color: rgb(236 253 245 / var(--tw-bg-opacity, 1))
+        }
+
+        .bg-emerald-500 {
+            --tw-bg-opacity: 1;
+            background-color: rgb(16 185 129 / var(--tw-bg-opacity, 1))
+        }
+
+        .bg-gray-50 {
+            --tw-bg-opacity: 1;
+            background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1))
+        }
+
+        .bg-red-50 {
+            --tw-bg-opacity: 1;
+            background-color: rgb(254 242 242 / var(--tw-bg-opacity, 1))
+        }
+
+        .bg-white {
+            --tw-bg-opacity: 1;
+            background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1))
+        }
+
+        .p-4 {
+            padding: 1rem
+        }
+
+        .p-6 {
+            padding: 1.5rem
+        }
+
+        .p-8 {
+            padding: 2rem
+        }
+
+        .px-4 {
+            padding-left: 1rem;
+            padding-right: 1rem
+        }
+
+        .px-6 {
+            padding-left: 1.5rem;
+            padding-right: 1.5rem
+        }
+
+        .py-2 {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem
+        }
+
+        .py-4 {
+            padding-top: 1rem;
+            padding-bottom: 1rem
+        }
+
+        .py-8 {
+            padding-top: 2rem;
+            padding-bottom: 2rem
+        }
+
+        .pr-5 {
+            padding-right: 1.25rem
+        }
+
+        .pr-8 {
+            padding-right: 2rem
+        }
+
+        .text-right {
+            text-align: right
+        }
+
+        .font-mono {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace
+        }
+
+        .text-2xl {
+            font-size: 1.5rem;
+            line-height: 2rem
+        }
+
+        .text-3xl {
+            font-size: 1.875rem;
+            line-height: 2.25rem
+        }
+
+        .text-lg {
+            font-size: 1.125rem;
+            line-height: 1.75rem
+        }
+
+        .text-sm {
+            font-size: 0.875rem;
+            line-height: 1.25rem
+        }
+
+        .text-xl {
+            font-size: 1.25rem;
+            line-height: 1.75rem
+        }
+
+        .text-xs {
+            font-size: 0.75rem;
+            line-height: 1rem
+        }
+
+        .font-bold {
+            font-weight: 700
+        }
+
+        .font-medium {
+            font-weight: 500
+        }
+
+        .italic {
+            font-style: italic
+        }
+
+        .leading-none {
+            line-height: 1
+        }
+
+        .leading-relaxed {
+            line-height: 1.625
+        }
+
+        .text-amber-700 {
+            --tw-text-opacity: 1;
+            color: rgb(180 83 9 / var(--tw-text-opacity, 1))
+        }
+
+        .text-blue-600 {
+            --tw-text-opacity: 1;
+            color: rgb(37 99 235 / var(--tw-text-opacity, 1))
+        }
+
+        .text-blue-700 {
+            --tw-text-opacity: 1;
+            color: rgb(29 78 216 / var(--tw-text-opacity, 1))
+        }
+
+        .text-emerald-700 {
+            --tw-text-opacity: 1;
+            color: rgb(4 120 87 / var(--tw-text-opacity, 1))
+        }
+
+        .text-gray-400 {
+            --tw-text-opacity: 1;
+            color: rgb(156 163 175 / var(--tw-text-opacity, 1))
+        }
+
+        .text-gray-500 {
+            --tw-text-opacity: 1;
+            color: rgb(107 114 128 / var(--tw-text-opacity, 1))
+        }
+
+        .text-gray-600 {
+            --tw-text-opacity: 1;
+            color: rgb(75 85 99 / var(--tw-text-opacity, 1))
+        }
+
+        .text-gray-700 {
+            --tw-text-opacity: 1;
+            color: rgb(55 65 81 / var(--tw-text-opacity, 1))
+        }
+
+        .text-gray-900 {
+            --tw-text-opacity: 1;
+            color: rgb(17 24 39 / var(--tw-text-opacity, 1))
+        }
+
+        .text-red-700 {
+            --tw-text-opacity: 1;
+            color: rgb(185 28 28 / var(--tw-text-opacity, 1))
+        }
+
+        .text-red-800 {
+            --tw-text-opacity: 1;
+            color: rgb(153 27 27 / var(--tw-text-opacity, 1))
+        }
+
+        .text-white {
+            --tw-text-opacity: 1;
+            color: rgb(255 255 255 / var(--tw-text-opacity, 1))
+        }
+
+        .shadow-md {
+            --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
+            box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)
+        }
+
+        .shadow-sm {
+            --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+            box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)
+        }
+
+        .outline-none {
+            outline: 2px solid transparent;
+            outline-offset: 2px
+        }
+
+        .transition {
+            transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
+            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms
+        }
+
+        .transition-all {
+            transition-property: all;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms
+        }
+
+        .hover\:border-blue-500:hover {
+            --tw-border-opacity: 1;
+            border-color: rgb(59 130 246 / var(--tw-border-opacity, 1))
+        }
+
+        .hover\:bg-blue-700:hover {
+            --tw-bg-opacity: 1;
+            background-color: rgb(29 78 216 / var(--tw-bg-opacity, 1))
+        }
+
+        .hover\:text-blue-600:hover {
+            --tw-text-opacity: 1;
+            color: rgb(37 99 235 / var(--tw-text-opacity, 1))
+        }
+
+        .focus\:ring-2:focus {
+            --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+            --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+            box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)
+        }
+
+        .focus\:ring-blue-500:focus {
+            --tw-ring-opacity: 1;
+            --tw-ring-color: rgb(59 130 246 / var(--tw-ring-opacity, 1))
+        }
+
+        @media (min-width: 768px) {
+            .md\:w-auto {
+                width: auto
+            }
+
+            .md\:grid-cols-2 {
+                grid-template-columns: repeat(2, minmax(0, 1fr))
+            }
+
+            .md\:grid-cols-3 {
+                grid-template-columns: repeat(3, minmax(0, 1fr))
+            }
+
+            .md\:flex-row {
+                flex-direction: row
+            }
+
+            .md\:items-center {
+                align-items: center
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .lg\:grid-cols-2 {
+                grid-template-columns: repeat(2, minmax(0, 1fr))
+            }
+
+            .lg\:grid-cols-4 {
+                grid-template-columns: repeat(4, minmax(0, 1fr))
+            }
+        }
+    </style>
+</head>
+
+<body class="flex flex-col min-h-screen" cz-shortcut-listen="true">
+
+    <!-- Edit Controls -->
+    <div class="edit-controls">
+        <button class="edit-btn" id="editModeBtn" onclick="toggleEditMode()">📝 מצב עריכה</button>
+        <button class="edit-btn save-btn" id="saveBtn" onclick="showUpdatedHTML()" style="display: none;">💾 קבל HTML
+            מעודכן</button>
+    </div>
+
+    <!-- HTML Output Modal -->
+
+
+    <div id="copyToast" class="copy-toast">הטקסט הועתק בהצלחה!</div>
+
+    <!-- Header & Nav -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center gap-3 py-4">
+                <div class="h-10 w-10 bg-blue-700 rounded-lg flex items-center justify-center text-white shadow-md">
+                    <span class="text-xl font-bold">LC</span>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold leading-none editable" contenteditable="false" data-key="site-title">
+                        LifeCloud</h1>
+                    <span class="text-xs text-blue-600 font-medium editable" contenteditable="false"
+                        data-key="site-subtitle">מבצע יום הזיכרון 2026</span>
+                </div>
+            </div>
+            <nav class="flex w-full md:w-auto overflow-x-auto">
+                <button onclick="showTab('strategy')" id="tab-strategy"
+                    class="whitespace-nowrap py-4 px-6 text-sm transition-all text-gray-500">📍 אסטרטגיה</button>
+                <button onclick="showTab('leads')" id="tab-leads"
+                    class="whitespace-nowrap py-4 px-6 text-sm text-gray-500 hover:text-blue-600 transition-all">📊 מאגר
+                    לידים</button>
+                <button onclick="showTab('templates')" id="tab-templates"
+                    class="whitespace-nowrap py-4 px-6 text-sm text-gray-500 hover:text-blue-600 transition-all tab-active">✉️
+                    תבניות (Templates)</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 py-8 w-full">
+
+        <!-- VIEW: STRATEGY -->
+        <div id="view-strategy" class="space-y-10 hidden">
+            <section class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+                <div class="max-w-3xl">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4 editable" contenteditable="false"
+                        data-key="main-title">היעד: יום הזיכרון תשפ"ו</h2>
+                    <p class="text-lg text-gray-600 leading-relaxed editable" contenteditable="false"
+                        data-key="main-description">
+                        אנחנו נמצאים 4 חודשים לפני יום הזיכרון. זהו רגע המפתח שבו ארגונים מקבלים החלטות על תקציבי הנצחה
+                        ומורשת. המטרה היא להפוך כל אנדרטה ובית עלמין ל-"ענן חיים" דיגיטלי.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                    <div class="p-4 bg-blue-50 rounded-2xl border border-blue-100">
+                        <p class="text-sm text-blue-700 font-bold mb-1 editable" contenteditable="false"
+                            data-key="focus1-title">פוקוס חרבות ברזל</p>
+                        <p class="text-gray-700 editable" contenteditable="false" data-key="focus1-desc">הנצחת חללי השנה
+                            האחרונה היא בראש סדר העדיפויות של כל עירייה ויחידה.</p>
+                    </div>
+                    <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-100">
+                        <p class="text-sm text-emerald-700 font-bold mb-1 editable" contenteditable="false"
+                            data-key="focus2-title">טכנולוגיה רגישה</p>
+                        <p class="text-gray-700 editable" contenteditable="false" data-key="focus2-desc">LifeCloud
+                            מאפשרת למשפחות לספר את הסיפור המלא שמאחורי האבן.</p>
+                    </div>
+                    <div class="p-4 bg-amber-50 rounded-2xl border border-amber-100">
+                        <p class="text-sm text-amber-700 font-bold mb-1 editable" contenteditable="false"
+                            data-key="focus3-title">מטרה עסקית</p>
+                        <p class="text-gray-700 editable" contenteditable="false" data-key="focus3-desc">גיוס 50 לקוחות
+                            ארגוניים עד מרץ 2026.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+                    <h3 class="text-xl font-bold mb-8">לו"ז אופרטיבי</h3>
+                    <div class="relative pr-8">
+                        <div class="timeline-line"></div>
+                        <div class="relative mb-8">
+                            <div
+                                class="absolute -right-[32px] top-1 w-4 h-4 rounded-full bg-blue-600 border-4 border-white shadow-sm">
+                            </div>
+                            <h4 class="font-bold text-gray-900">ינואר: Outbound מאסיבי</h4>
+                            <p class="text-gray-500 text-sm italic">שליחת מיילים וקביעת פגישות הדגמה.</p>
+                        </div>
+                        <div class="relative mb-8">
+                            <div
+                                class="absolute -right-[32px] top-1 w-4 h-4 rounded-full bg-blue-400 border-4 border-white shadow-sm">
+                            </div>
+                            <h4 class="font-bold text-gray-900">פברואר: סגירת חוזים</h4>
+                            <p class="text-gray-500 text-sm italic">חתימה על הסכמי התקשרות ואיסוף חומרים.</p>
+                        </div>
+                        <div class="relative">
+                            <div
+                                class="absolute -right-[32px] top-1 w-4 h-4 rounded-full bg-emerald-500 border-4 border-white shadow-sm">
+                            </div>
+                            <h4 class="font-bold text-emerald-700">מרץ-אפריל: הטמעה בשטח</h4>
+                            <p class="text-gray-500 text-sm italic">התקנת QR בבתי עלמין ואנדרטאות.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+                    <h3 class="text-xl font-bold mb-4">פוטנציאל שוק (הערכת לקוחות)</h3>
+                    <div class="chart-container">
+                        <canvas id="marketChart" width="402" height="210"
+                            style="display: block; box-sizing: border-box; height: 280px; width: 536px;"></canvas>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- VIEW: LEADS DATABASE -->
+        <div id="view-leads" class="hidden space-y-6">
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">מאגר מטרות מורחב</h2>
+                    <div class="flex flex-wrap gap-2">
+                        <select id="sectorFilter" onchange="filterLeads()"
+                            class="px-4 py-2 bg-gray-50 border rounded-xl text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                            <option value="all">כל המגזרים</option>
+                            <option value="muni">רשויות מקומיות</option>
+                            <option value="idf">יחידות ועמותות צה"ל</option>
+                            <option value="youth">תנועות נוער</option>
+                        </select>
+                        <input type="text" id="leadSearch" onkeyup="filterLeads()" placeholder="חפש ארגון..."
+                            class="px-4 py-2 bg-gray-50 border rounded-xl text-sm focus:ring-2 focus:ring-blue-500 outline-none w-64">
+                    </div>
+                </div>
+                <div class="overflow-x-auto border border-gray-100 rounded-2xl">
+                    <table class="w-full text-right">
+                        <thead>
+                            <tr class="bg-gray-50 border-b">
+                                <th class="px-6 py-4 text-xs font-bold text-gray-400">ארגון</th>
+                                <th class="px-6 py-4 text-xs font-bold text-gray-400">מגזר</th>
+                                <th class="px-6 py-4 text-xs font-bold text-gray-400">פרטי התקשרות</th>
+                                <th class="px-6 py-4 text-xs font-bold text-gray-400">הערה</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leadsTableBody" class="divide-y divide-gray-50">
+                            <tr>
+                                <td class="px-6 py-4 text-sm font-bold">עיריית תל אביב-יפו</td>
+                                <td class="px-6 py-4 text-xs font-medium">muni</td>
+                                <td class="px-6 py-4 text-sm text-blue-600">tksim@tel-aviv.gov.il</td>
+                                <td class="px-6 py-4 text-xs text-gray-500 italic">פורום ה-15, תקציב גבוה.</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 text-sm font-bold">עיריית ירושלים</td>
+                                <td class="px-6 py-4 text-xs font-medium">muni</td>
+                                <td class="px-6 py-4 text-sm text-blue-600">hantzacha@jerusalem.muni.il</td>
+                                <td class="px-6 py-4 text-xs text-gray-500 italic">ריכוז אתרים לאומיים.</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 text-sm font-bold">עמותת גולני</td>
+                                <td class="px-6 py-4 text-xs font-medium">idf</td>
+                                <td class="px-6 py-4 text-sm text-blue-600">golani@golani.co.il</td>
+                                <td class="px-6 py-4 text-xs text-gray-500 italic">אתר הנצחה צומת גולני.</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 text-sm font-bold">תנועת הצופים</td>
+                                <td class="px-6 py-4 text-xs font-medium">youth</td>
+                                <td class="px-6 py-4 text-sm text-blue-600">zofim@zofim.org.il</td>
+                                <td class="px-6 py-4 text-xs text-gray-500 italic">הנצחה בכל שבט.</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 text-sm font-bold">משטרת ישראל</td>
+                                <td class="px-6 py-4 text-xs font-medium">emergency</td>
+                                <td class="px-6 py-4 text-sm text-blue-600">pniot@police.gov.il</td>
+                                <td class="px-6 py-4 text-xs text-gray-500 italic">חללי ה-7.10.</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 text-sm font-bold">מועצה אזורית אשכול</td>
+                                <td class="px-6 py-4 text-xs font-medium">muni</td>
+                                <td class="px-6 py-4 text-sm text-blue-600">info@eshkol.info</td>
+                                <td class="px-6 py-4 text-xs text-gray-500 italic">הנצחה קהילתית בעוטף.</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 text-sm font-bold">עמותת גבעתי</td>
+                                <td class="px-6 py-4 text-xs font-medium">idf</td>
+                                <td class="px-6 py-4 text-sm text-blue-600">givati@givati.org.il</td>
+                                <td class="px-6 py-4 text-xs text-gray-500 italic">אתר מצודת יואב.</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 text-sm font-bold">בני עקיבא</td>
+                                <td class="px-6 py-4 text-xs font-medium">youth</td>
+                                <td class="px-6 py-4 text-sm text-blue-600">info@bneiakiva.org.il</td>
+                                <td class="px-6 py-4 text-xs text-gray-500 italic">ערכי ציונות דתית.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW: TEMPLATES -->
+        <div id="view-templates" class="space-y-8">
+
+            <!-- Spam Deliverability Section -->
+            <section class="bg-red-50 p-6 rounded-2xl border border-red-100">
+                <h3 class="text-lg font-bold text-red-800 mb-2 flex items-center gap-2 editable" contenteditable="false"
+                    data-key="spam-title">🛡️ איך לעבור את מסנן הספאם של
+                    גוגל?</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-red-700">
+                    <ul class="list-disc pr-5 space-y-1 editable" contenteditable="false" data-key="spam-tips-1">
+                        <li><strong>ללא מילים טריגריות:</strong> הימנע מ-"חינם", "דחוף", "הנחה", "קנה עכשיו".</li>
+                        <li><strong>שורת נושא נקייה:</strong> אל תשתמש בסימני קריאה מרובים או באותיות גדולות (caps
+                            lock).</li>
+                        <li><strong>יחס טקסט-קישור:</strong> אל תשים יותר מקישור אחד במייל הראשון.</li>
+                    </ul>
+                    <ul class="list-disc pr-5 space-y-1 editable" contenteditable="false" data-key="spam-tips-2">
+                        <li><strong>פנייה אישית:</strong> תמיד כתוב את שם הנמען ושם הארגון (גוגל מזהה מיילים זהים
+                            כספאם).</li>
+                        <li><strong>ללא תמונות כבדות:</strong> המנע מצילומים כבדים או לוגואים גדולים במייל הראשון.</li>
+                        <li><strong>חתימה פשוטה:</strong> חתימת טקסט בלבד עדיפה על חתימה גרפית.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Template Tabs Layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+                <button onclick="switchTemplate('muni')" id="btn-tmpl-muni"
+                    class="tmpl-btn p-4 bg-white border border-gray-200 rounded-2xl text-right font-bold hover:border-blue-500 shadow-sm border-r-4 border-r-blue-500 border-blue-500 bg-blue-50">🏢
+                    רשויות מקומיות</button>
+                <button onclick="switchTemplate('idf')" id="btn-tmpl-idf"
+                    class="tmpl-btn p-4 bg-white border border-gray-200 rounded-2xl text-right font-bold hover:border-blue-500 shadow-sm border-r-4 border-r-indigo-500">🎗️
+                    עמותות ויחידות צה"ל</button>
+                <button onclick="switchTemplate('youth')" id="btn-tmpl-youth"
+                    class="tmpl-btn p-4 bg-white border border-gray-200 rounded-2xl text-right font-bold hover:border-blue-500 shadow-sm border-r-4 border-r-amber-500">👦
+                    תנועות נוער</button>
+                <button onclick="switchTemplate('emergency')" id="btn-tmpl-emergency"
+                    class="tmpl-btn p-4 bg-white border border-gray-200 rounded-2xl text-right font-bold hover:border-blue-500 shadow-sm border-r-4 border-r-red-500">🚑
+                    כוחות הצלה וחירום</button>
+            </div>
+
+            <!-- Template Editor/Viewer -->
+            <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 id="templateTitle" class="text-xl font-bold editable" contenteditable="false"
+                        data-key="template-title-muni">טמפלייט: רשויות מקומיות (B2G)</h3>
+                    <button onclick="copyCurrentTemplate()"
+                        class="bg-blue-600 text-white px-6 py-2 rounded-full font-bold hover:bg-blue-700 transition">העתק
+                        תוכן מייל</button>
+                </div>
+
+                <div class="bg-gray-50 p-6 rounded-2xl border border-gray-200 font-mono text-sm space-y-4 whitespace-pre-wrap leading-relaxed editable"
+                    id="templateContent" contenteditable="false" data-key="template-content-muni">נושא: הנצחה דיגיטלית
+                    ב[שם העיר] לקראת יום הזיכרון
+
+                    שלום [שם איש קשר],
+
+                    אני פונה אליך לקsssssראת יום הזיכרון הקרוב, מתוך הבנה שזהו זמן שבו אנו מבקשים לתת משמעות עמוקה יותר
+                    למורשת הנופלים של העיר שלנו.
+
+                    אנחנו ב-LifeCloud מסייעים לרשויות מקומיות להפוך את המצבות והאנדרטאות העירוניות לסיפורים חיים.
+                    באמצעות פתרון טכנולוגי רגיש המבוסס על קוד QR מעוצב, המבקרים באתר ההנצחה יכולים לסרוק ולהגיע ל"ענן
+                    חיים" המכיל תמונות, סרטונים וביוגרפיה של הנופל.
+
+                    הפתרון שלנו כבר מוטמע ברשויות רבות ומאפשר למשפחות השכולות להרגיש שהיקרים להן אינם רק שם חקוק באבן,
+                    אלא סיפור שלם שמועבר לדורות הבאים.
+
+                    נשמח להציג לך כיצד נוכל להטמיע את המיזם ב[שם העיר] בלוחות זמנים קצרים.
+                    האם תהיה פנוי לשיחה קצרה של 5 דקות בשבוע הקרוב?
+
+                    בברכה,
+                    [שמך]
+                    LifeCloud - הופכים זיכרון לחיים
+                    lifecloud-qr.com</div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // --- DATA: LEADS ---
+        const leadsData = [
+            { name: "עיריית תל אביב-יפו", sector: "muni", contact: "tksim@tel-aviv.gov.il", note: "פורום ה-15, תקציב גבוה." },
+            { name: "עיריית ירושלים", sector: "muni", contact: "hantzacha@jerusalem.muni.il", note: "ריכוז אתרים לאומיים." },
+            { name: "עמותת גולני", sector: "idf", contact: "golani@golani.co.il", note: "אתר הנצחה צומת גולני." },
+            { name: "תנועת הצופים", sector: "youth", contact: "zofim@zofim.org.il", note: "הנצחה בכל שבט." },
+            { name: "משטרת ישראל", sector: "emergency", contact: "pniot@police.gov.il", note: "חללי ה-7.10." },
+            { name: "מועצה אזורית אשכול", sector: "muni", contact: "info@eshkol.info", note: "הנצחה קהילתית בעוטף." },
+            { name: "עמותת גבעתי", sector: "idf", contact: "givati@givati.org.il", note: "אתר מצודת יואב." },
+            { name: "בני עקיבא", sector: "youth", contact: "info@bneiakiva.org.il", note: "ערכי ציונות דתית." }
+        ];
+
+        // --- DATA: TEMPLATES ---
+        const templates = {
+            muni: {
+                title: "טמפלייט: רשויות מקומיות (B2G)",
+                content: `נושא: הנצחה דיגיטלית ב[שם העיר] לקראת יום הזיכרון\n\nשלום [שם איש קשר],\n\nאני פונה אליך לקsssssראת יום הזיכרון הקרוב, מתוך הבנה שזהו זמן שבו אנו מבקשים לתת משמעות עמוקה יותר למורשת הנופלים של העיר שלנו.\n\nאנחנו ב-LifeCloud מסייעים לרשויות מקומיות להפוך את המצבות והאנדרטאות העירוניות לסיפורים חיים. באמצעות פתרון טכנולוגי רגיש המבוסס על קוד QR מעוצב, המבקרים באתר ההנצחה יכולים לסרוק ולהגיע ל"ענן חיים" המכיל תמונות, סרטונים וביוגרפיה של הנופל.\n\nהפתרון שלנו כבר מוטמע ברשויות רבות ומאפשר למשפחות השכולות להרגיש שהיקרים להן אינם רק שם חקוק באבן, אלא סיפור שלם שמועבר לדורות הבאים.\n\nנשמח להציג לך כיצד נוכל להטמיע את המיזם ב[שם העיר] בלוחות זמנים קצרים. \nהאם תהיה פנוי לשיחה קצרה של 5 דקות בשבוע הקרוב?\n\nבברכה,\n[שמך]\nLifeCloud - הופכים זיכרון לחיים\nlifecloud-qr.com`
+            },
+            idf: {
+                title: "טמפלייט: עמותות ויחידות צה\"ל",
+                content: `נושא: שימור מורשת הלוחמים של [שם היחידה] - הצעה לשיתוף פעולה
+
+שלום [שם איש קשר],
+
+כמי שמובילים את שימור המורשת של [שם היחידה/העמותה], אתם בוודאי מכירים את האתגר של חיבור הדור הצעיר לסיפורי הגבורה והנופלים.
+
+שמי [שמך] מ-LifeCloud, ואנחנו עובדים עם עמותות לוחמים כדי להנגיש את סיפורי הנופלים בבסיסי היחידה ובאנדרטאות המורשת שלה. אנחנו מייצרים "גשר דיגיטלי" על גבי אתרי ההנצחה הקיימים - קוד QR מעוצב שחושף בפני הסורקים עולם שלם של תוכן, סרטוני לוחמים וספרי זיכרון דיגיטליים.
+
+לקראת יום הזיכרון הקרוב, היינו רוצים לעזור לכם להנציח את חללי היחידה (ובפרט את גיבורי השנה האחרונה) בצורה המכובדת והחדשנית ביותר.
+
+נוכל לקבוע פגישת הדגמה קצרה שבה נראה איך זה עובד בשטח?
+
+בכבוד רב,
+[שמך]
+LifeCloud
+lifecloud-qr.com`
+            },
+            youth: {
+                title: "טמפלייט: תנועות נוער",
+                content: `נושא: יוזמת הנצחה חינוכית ב[שם התנועה] לקראת יום הזיכרון
+
+שלום [שם איש קשר],
+
+בתנועת נוער כמו [שם התנועה], הזיכרון והמורשת הם אבני יסוד בחינוך של הדור הבא. 
+
+אני פונה אליך מ-LifeCloud, מיזם המאפשר להנגיש את סיפורי הבוגרים והנופלים של התנועה בדרך שהנוער של היום מבין - דרך הסמארטפון. אנחנו מטמיעים קודי QR מעוצבים בפינות הזיכרון בשבטים/קנים, שמאפשרים לחניכים לסרוק ולפגוש את סיפור חייהם של הנופלים בצורה אינטראקטיבית ומרגשת.
+
+המטרה שלנו היא להפוך את יום הזיכרון הקרוב ב[שם התנועה] מחוויה פסיבית למפגש אקטיבי עם המורשת.
+
+נשמח לשלוח לכם הצעה מותאמת לצרכי התנועה. האם נוכל לשוחח על כך?
+
+בברכה,
+[שמך]
+LifeCloud
+lifecloud-qr.com`
+            },
+            emergency: {
+                title: "טמפלייט: כוחות הצלה וחירום",
+                content: `נושא: הנצחת גבורת לוחמי [שם הארגון] - LifeCloud
+
+שלום [שם איש קשר],
+
+לוחמי ומתנדבי [שם הארגון] עומדים בחזית הגבורה הישראלית. אירועי השנה האחרונה הותירו בנו פצעים עמוקים, אך גם סיפורי גבורה בלתי נתפסים שחובה עלינו לשמר.
+
+אנחנו ב-LifeCloud מתמחים בהקמת "ענני חיים" דיגיטליים לארגוני ביטחון והצלה. הטכנולוגיה שלנו מאפשרת לכל אדם המגיע לאתר הנצחה או לבית עלמין, לסרוק קוד פשוט ולצפות בתיעוד המבצעי, בסיפור האישי ובמורשת שהשאיר אחריו הלוחם.
+
+לקראת יום הזיכרון, אנו מציעים לארגון פתרון שלם של הנצחה דיגיטלית המותאם למשפחות השכולות שלכם.
+
+נודה על ההזדמנות להציג לכם את המערכת בהקדם.
+
+בתודה,
+[שמך]
+צוות LifeCloud
+lifecloud-qr.com`
+            }
+        };
+
+        let currentTmplKey = 'muni';
+
+        // --- LOGIC: TABS ---
+        function showTab(tabId) {
+            ['strategy', 'leads', 'templates'].forEach(id => {
+                document.getElementById(`view-${id}`).classList.add('hidden');
+                document.getElementById(`tab-${id}`).classList.remove('tab-active');
+                document.getElementById(`tab-${id}`).classList.add('text-gray-500');
+            });
+            document.getElementById(`view-${tabId}`).classList.remove('hidden');
+            document.getElementById(`tab-${tabId}`).classList.add('tab-active');
+            if (tabId === 'templates') switchTemplate(currentTmplKey);
+        }
+
+        // --- LOGIC: TEMPLATES ---
+        function switchTemplate(key) {
+            currentTmplKey = key;
+            document.querySelectorAll('.tmpl-btn').forEach(btn => btn.classList.remove('border-blue-500', 'bg-blue-50'));
+            document.getElementById(`btn-tmpl-${key}`).classList.add('border-blue-500', 'bg-blue-50');
+
+            // Update title (now editable)
+            const titleElement = document.getElementById('templateTitle');
+            titleElement.innerHTML = templates[key].title;
+
+            // Update content (now editable)  
+            const contentElement = document.getElementById('templateContent');
+            contentElement.innerHTML = templates[key].content;
+
+            // Make sure they maintain their editable attributes
+            titleElement.setAttribute('data-key', `template-title-${key}`);
+            contentElement.setAttribute('data-key', `template-content-${key}`);
+        }
+
+        function copyCurrentTemplate() {
+            // Get the current content from the editable div (which may have been modified)
+            const contentElement = document.getElementById('templateContent');
+            const text = contentElement.innerHTML || contentElement.textContent || templates[currentTmplKey].content;
+
+            const el = document.createElement('textarea');
+            el.value = text;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+
+            const toast = document.getElementById('copyToast');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // --- LOGIC: LEADS ---
+        function renderTable(data) {
+            const tbody = document.getElementById('leadsTableBody');
+            tbody.innerHTML = '';
+            data.forEach(item => {
+                const row = `<tr>
+                    <td class="px-6 py-4 text-sm font-bold">${item.name}</td>
+                    <td class="px-6 py-4 text-xs font-medium">${item.sector}</td>
+                    <td class="px-6 py-4 text-sm text-blue-600">${item.contact}</td>
+                    <td class="px-6 py-4 text-xs text-gray-500 italic">${item.note}</td>
+                </tr>`;
+                tbody.insertAdjacentHTML('beforeend', row);
+            });
+        }
+
+        function filterLeads() {
+            const search = document.getElementById('leadSearch').value.toLowerCase();
+            const sector = document.getElementById('sectorFilter').value;
+            const filtered = leadsData.filter(l => (sector === 'all' || l.sector === sector) && l.name.toLowerCase().includes(search));
+            renderTable(filtered);
+        }
+
+        // --- CHARTS ---
+        window.onload = () => {
+            new Chart(document.getElementById('marketChart').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['רשויות', 'עמותות צה"ל', 'תנועות נוער', 'חירום'],
+                    datasets: [{
+                        label: 'מספר לקוחות פוטנציאליים (מיידי)',
+                        data: [75, 40, 25, 15],
+                        backgroundColor: '#1d4ed8'
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+            renderTable(leadsData);
+        }
+
+        // --- EDITABLE FUNCTIONALITY ---
+        let editMode = false;
+
+        function toggleEditMode() {
+            editMode = !editMode;
+            const editables = document.querySelectorAll('.editable');
+            const editBtn = document.getElementById('editModeBtn');
+            const saveBtn = document.getElementById('saveBtn');
+
+            if (editMode) {
+                editables.forEach(el => el.setAttribute('contenteditable', 'true'));
+                editBtn.textContent = '🔒 יציאה מעריכה';
+                editBtn.classList.add('active');
+                saveBtn.style.display = 'block';
+            } else {
+                editables.forEach(el => el.setAttribute('contenteditable', 'false'));
+                editBtn.textContent = '📝 מצב עריכה';
+                editBtn.classList.remove('active');
+                saveBtn.style.display = 'none';
+            }
+        }
+
+        // Visual feedback for editing
+        document.addEventListener('focusin', function (e) {
+            if (e.target.classList.contains('editable') && editMode) {
+                e.target.classList.add('editing');
+            }
+        });
+
+        document.addEventListener('focusout', function (e) {
+            if (e.target.classList.contains('editable')) {
+                e.target.classList.remove('editing');
+            }
+        });
+
+        function downloadUpdatedHTML() {
+            showUpdatedHTML();
+        }
+
+        function showUpdatedHTML() {
+            // Get the current HTML
+            let htmlContent = document.documentElement.outerHTML;
+
+            // Create a new document to modify
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(htmlContent, 'text/html');
+
+            // Update all editable content with current values
+            const editables = document.querySelectorAll('.editable[data-key]');
+            editables.forEach(element => {
+                const key = element.getAttribute('data-key');
+                const currentContent = element.innerHTML;
+                const docElement = doc.querySelector(`[data-key="${key}"]`);
+                if (docElement) {
+                    docElement.innerHTML = currentContent;
+                    // Make sure it's not in edit mode in the downloaded version
+                    docElement.setAttribute('contenteditable', 'false');
+                }
+            });
+
+            // Also update the templates object in the JavaScript with any changes
+            const templateContent = document.getElementById('templateContent');
+            const templateKey = currentTmplKey;
+            if (templateContent && templates[templateKey]) {
+                const updatedContent = templateContent.textContent || templateContent.innerHTML;
+                // Update the templates object in the downloaded HTML
+                const scriptElements = doc.querySelectorAll('script');
+                scriptElements.forEach(script => {
+                    if (script.innerHTML.includes('templates')) {
+                        const scriptContent = script.innerHTML;
+                        const updatedScript = scriptContent.replace(
+                            new RegExp(`(${templateKey}:\\s*{[^}]*content:\\s*\`)([^\`]*)\``, 'g'),
+                            `$1${updatedContent.replace(/`/g, '\\`').replace(/\n/g, '\\n')}\``
+                        );
+                        script.innerHTML = updatedScript;
+                    }
+                });
+            }
+
+            // Remove the modal and edit controls from the output
+            const modal = doc.getElementById('htmlOutputModal');
+            if (modal) modal.remove();
+
+            // Make sure edit mode is off
+            const editModeBtn = doc.getElementById('editModeBtn');
+            if (editModeBtn) {
+                editModeBtn.textContent = '📝 מצב עריכה';
+                editModeBtn.classList.remove('active');
+            }
+
+            const saveBtn = doc.getElementById('saveBtn');
+            if (saveBtn) {
+                saveBtn.style.display = 'none';
+            }
+
+            // Get the updated HTML
+            const updatedHTML = '<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
+
+            // Show in modal
+            document.getElementById('htmlCodeArea').value = updatedHTML;
+            document.getElementById('htmlOutputModal').style.display = 'block';
+        }
+
+        function closeHTMLModal() {
+            document.getElementById('htmlOutputModal').style.display = 'none';
+        }
+
+        function copyHTMLCode() {
+            const htmlCode = document.getElementById('htmlCodeArea');
+            htmlCode.select();
+            document.execCommand('copy');
+
+            const toast = document.getElementById('copyToast');
+            toast.textContent = 'קוד HTML הועתק! עכשיו דבק אותו בקובץ index.html';
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+                toast.textContent = 'הטקסט הועתק בהצלחה!';
+            }, 4000);
+        }
+    </script>
+    <!-- Code injected by live-server -->
+    <script>
+        // <![CDATA[  <-- For SVG support
+        if ('WebSocket' in window) {
+            (function () {
+                function refreshCSS() {
+                    var sheets = [].slice.call(document.getElementsByTagName("link"));
+                    var head = document.getElementsByTagName("head")[0];
+                    for (var i = 0; i < sheets.length; ++i) {
+                        var elem = sheets[i];
+                        var parent = elem.parentElement || head;
+                        parent.removeChild(elem);
+                        var rel = elem.rel;
+                        if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+                            var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+                            elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+                        }
+                        parent.appendChild(elem);
+                    }
+                }
+                var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+                var address = protocol + window.location.host + window.location.pathname + '/ws';
+                var socket = new WebSocket(address);
+                socket.onmessage = function (msg) {
+                    if (msg.data == 'reload') window.location.reload();
+                    else if (msg.data == 'refreshcss') refreshCSS();
+                };
+                if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+                    console.log('Live reload enabled.');
+                    sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+                }
+            })();
+        }
+        else {
+            console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+        }
+        // ]]>
+    </script>
+
+
+</body>
+
+</html>
